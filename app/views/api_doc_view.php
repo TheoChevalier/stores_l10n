@@ -67,7 +67,8 @@ $base = '<em class="dim">' . BASE_HTML_URL . 'api/</em>';
 <pre><code class="json">{
     "title": "Blabla",
     "short_desc": "Blabla",
-    "long_desc": "Blabla"
+    "long_desc": "Blabla",
+    "whatsnew": "Blabla"
 }</code></pre>
 </p>
 

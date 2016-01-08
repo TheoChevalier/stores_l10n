@@ -33,15 +33,15 @@ class Project
     private $android_locales_beta = [];
 
     // source: https://l10n.mozilla-community.org/~flod/webstatus/api/?product=firefox-ios
-    // translations are at: http://svn.mozilla.org/projects/l10n-misc/trunk/firefox-ios/
+    // translations are at: https://github.com/mozilla-l10n/firefoxios-l10n/
     // For iOS we used the locale code es for Spanish from Spain, that was a mistake, this is
     // why I changed it to es-ES in the array below, otherwise the Spanish team would have
     // to work in the es-ES folder for Android and the es folder for iOS
     private $ios_locales_release = [
         'bg', 'bn-IN', 'br', 'cs', 'cy', 'da', 'de', 'dsb', 'en-US', 'es-ES',
         'es-MX', 'fr', 'fy-NL', 'ga-IE', 'gd', 'gl', 'hsb', 'id', 'is', 'it',
-        'ja', 'ko', 'lt', 'nb-NO', 'nl', 'nn-NO', 'pl', 'pt-BR', 'pt-PT', 'ru',
-        'sk', 'sl', 'son', 'sv-SE', 'tr', 'uk', 'uz', 'zh-CN',
+        'ja', 'ko', 'lt', 'nb-NO', 'nl', 'nn-NO', 'pl', 'pt-BR', 'pt-PT',
+        'ru', 'sk', 'sl', 'son', 'sv-SE', 'tr', 'uk', 'uz', 'zh-CN',
         'zh-TW',
     ];
 
@@ -140,8 +140,11 @@ class Project
         'google' => [
             // channel => path to template file
             'release' => [
-                'template' => 'google/release/listing_nov_2014.php',
-                'langfile' => 'description_page.lang',
+                'template' => 'google/release/listing_oct_2015.php',
+                'langfile' => [
+                        'android_42_release.lang',
+                        'whatsnew/whatsnew_android_44.lang',
+                    ],
                 ],
             'beta' => [
                 'template' => 'google/beta/listing_may_2015.php',
@@ -150,8 +153,8 @@ class Project
             'next' => [
                 'template' => 'google/next/listing_oct_2015.php',
                 'langfile' => [
-                    'android_42_release.lang',
-                    'apple_description_release.lang',
+                        'android_42_release.lang',
+                        'whatsnew/whatsnew_android_44.lang',
                     ],
                 ],
         ],
@@ -160,7 +163,7 @@ class Project
             'release' => [
                 'template' => 'apple/release/listing_sept_2015.php',
                 'langfile' => 'apple_description_release.lang',
-                ],
+            ],
         ],
     ];
 

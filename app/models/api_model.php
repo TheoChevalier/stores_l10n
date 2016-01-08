@@ -29,6 +29,9 @@ switch ($request->getService()) {
                 'short_desc' => $short_desc($translate),
                 'long_desc'  => str_replace(["\r", "\n"], "\n", $description($translate)),
             ];
+            if ($request['channel'] == 'next' || $request['channel'] == 'release') {
+                $json['whatsnew'] = $whatsnew($translate);
+            }
         }
         if ($request['store'] == 'apple') {
             $json = [
@@ -59,6 +62,10 @@ switch ($request->getService()) {
                     $desc       = $set_limit(4000, $description($translate));
                     $title      = $set_limit(30, $app_title($translate));
                     $short_desc = $set_limit(80, $short_desc($translate));
+
+                    if ($request->query['channel'] == 'next' || $request->query['channel'] == 'release') {
+                        $whatsnew = $set_limit(500, $whatsnew($translate));
+                    }
 
                     if ($desc && $title && $short_desc) {
                         $done[] = $lang;

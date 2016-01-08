@@ -161,7 +161,7 @@ class Project extends atoum\test
     {
         $obj = new _Project();
         $this
-            ->string($obj->getLangFile('google', 'release'))
+            ->array($obj->getLangFile('google', 'release'))
             ->string($obj->getLangFile('google', 'beta'))
             ;
         $this
