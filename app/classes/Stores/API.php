@@ -78,6 +78,10 @@ class API
             $this->query['channel'] = $this->parameters[2];
         }
 
+        if (isset($this->parameters[3])) {
+            $this->query['section'] = $this->parameters[3];
+        }
+
         if (isset($this->parameters[1])
             && $this->parameters[1] == 'translation'
             && isset($this->parameters[3])) {

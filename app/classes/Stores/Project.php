@@ -378,17 +378,50 @@ class Project
     }
 
     /**
-     * Get the lang file name for a Store and Channel
+     * Get the lang file name(s) for a Store and Channel. Can be filtered by Section.
      * @param  string $store   Name of the Store
      * @param  string $channel Name of the Channel
-     * @return mixed  String containing the langfile name or False
+     * @param  string $section Name of the Section. Returns all sections by default.
+     * @return mixed  String containing the langfile name(s) or False
      */
-    public function getLangFile($store, $channel)
+    public function getLangFile($store, $channel, $section = '')
     {
         if (! isset($this->templates[$store][$channel]['langfile'])) {
             return false;
         }
 
-        return $this->templates[$store][$channel]['langfile'];
+        $files = $this->templates[$store][$channel]['langfile'];
+
+        switch ($section) {
+            case 'whatsnew':
+                if (is_array($files)) {
+                    foreach ($files as $key => $value) {
+                        if (strpos($value, 'whatsnew/') === 0) {
+                            $whatsnew[$key] = $value;
+                        }
+                    }
+                } else {
+                    if (strpos($files, 'whatsnew/') === 0) {
+                        $whatsnew = $files;
+                    }
+                }
+
+                return isset($whatsnew) ? $whatsnew : false;
+                break;
+            case 'exclude_whatsnew':
+                $whatsnew = $this->getLangFile($store, $channel, 'whatsnew');
+                if (is_array($whatsnew) && is_array($files)) {
+                    return array_diff($files, $whatsnew);
+                } elseif (is_array($files)) {
+                    unset($files[$whatsnew]);
+
+                    return $files;
+                } else {
+                    return $files;
+                }
+                break;
+            default:
+                return $files;
+        }
     }
 }

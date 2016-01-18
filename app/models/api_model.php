@@ -48,8 +48,9 @@ switch ($request->getService()) {
         $view = 'api';
 
         foreach ($project->getFirefoxLocales($request->query['store'], $request->query['channel']) as $lang) {
-            $translate = new Translate($lang, $project->getLangFile($request->query['store'], $request->query['channel']));
+            $translate = new Translate($lang, $project->getLangFile($request->query['store'], $request->query['channel'], 'exclude_whatsnew'));
             $translate::$log_errors = false;
+
             if ($translate->isFileTranslated()) {
                 $set_limit = function ($limit, $string) {
                     return mb_strlen(trim(strip_tags($string))) <= $limit;
@@ -63,12 +64,27 @@ switch ($request->getService()) {
                     $title      = $set_limit(30, $app_title($translate));
                     $short_desc = $set_limit(80, $short_desc($translate));
 
-                    if ($request->query['channel'] == 'next' || $request->query['channel'] == 'release') {
-                        $whatsnew = $set_limit(500, $whatsnew($translate));
-                    }
-
                     if ($desc && $title && $short_desc) {
-                        $done[] = $lang;
+                        /* To be included in whatsnew complete locales, a locale
+                         * must have translated the other strings first.
+                         * If other strings are complete but whatsnew is uncomplete,
+                         * consider the locale done.
+                         */
+                        if (isset($request->query['section']) && $request->query['section'] == 'whatsnew') {
+                            if ($request->query['channel'] == 'next' || $request->query['channel'] == 'release') {
+                                $translate_whatsnew = new Translate($lang, $project->getLangFile($request->query['store'], $request->query['channel'], 'whatsnew'));
+
+                                // Check if whatsnew is done
+                                if ($translate_whatsnew->isFileTranslated() && $set_limit(500, $whatsnew($translate))) {
+                                    $done[] = $lang;
+                                }
+                            } else {
+                                http_response_code(400);
+                                $json = ['error' => 'No \'What\'s new\' section for this channel.'];
+                            }
+                        } else {
+                            $done[] = $lang;
+                        }
                     }
                 } elseif ($request->query['store'] == 'apple') {
                     // Include the current template
@@ -86,7 +102,7 @@ switch ($request->getService()) {
         }
 
         $supported = array_unique(array_values($project->getLocalesMapping($request->query['store'])));
-        $json = array_values(array_intersect($done, $supported));
+        $json = empty($json) ? array_values(array_intersect($done, $supported)) : $json;
 
         break;
     default:
