@@ -11,7 +11,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 // Launch PHP dev server in the background
 chdir(INSTALL_ROOT);
-exec('php -S localhost:8082 -t web/ > /dev/null 2>&1 & echo $!', $output);
+exec('./start.sh -tests-server > /dev/null 2>&1 & echo $!', $output);
 
 // We will need the pid to kill it, beware, this is the pid of the bash process started with start.sh
 $pid = $output[0];
@@ -39,7 +39,7 @@ $paths = [
 
 $obj = new \pchevrel\Verif('Check API responses');
 $obj
-    ->setHost('localhost:8082')
+    ->setHost('localhost:8083')
     ->setPathPrefix('api/');
 
 $check = function ($object, $paths) {
