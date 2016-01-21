@@ -141,10 +141,7 @@ class Project
             // channel => path to template file
             'release' => [
                 'template' => 'google/release/listing_oct_2015.php',
-                'langfile' => [
-                        'android_42_release.lang',
-                        'whatsnew/whatsnew_android_44.lang',
-                    ],
+                'langfile' => ['android_42_release.lang'],
                 ],
             'beta' => [
                 'template' => 'google/beta/listing_may_2015.php',
@@ -152,10 +149,7 @@ class Project
                 ],
             'next' => [
                 'template' => 'google/next/listing_oct_2015.php',
-                'langfile' => [
-                        'android_42_release.lang',
-                        'whatsnew/whatsnew_android_44.lang',
-                    ],
+                'langfile' => ['android_42_release.lang'],
                 ],
         ],
         'apple' => [

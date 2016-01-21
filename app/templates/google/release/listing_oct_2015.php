@@ -133,9 +133,5 @@ $short_desc = function ($translate) use ($_) {
 
 $whatsnew = function ($translate) use ($_) {
     return <<<OUT
-{$_('What’s new — item 1')}
-{$_('What’s new — item 2')}
-{$_('What’s new — item 3')}
-
 OUT;
 };
