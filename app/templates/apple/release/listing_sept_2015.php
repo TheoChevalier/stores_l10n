@@ -123,7 +123,7 @@ $whatsnew = function ($translations) use ($_) {
 • {$_('New menu in the toolbar for quick access to popular features')}
 • {$_('Ability to “Close All Tabs” and to recover them')}
 • {$_('Set a custom homepage and get access to your favorite web page faster')}
-• {$_('Synced tabs can now be found in the History icon')}
+• {$_('Synced tabs can now be found in the History')}
 OUT;
 };
 
